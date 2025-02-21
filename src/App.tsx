@@ -17,8 +17,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const images = [
-    "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
-    "https://images.unsplash.com/photo-1585128903994-9788298932a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
+    "https://images.unsplash.com/photo-1638799869566-b17fa794c4de?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
+    "https://images.unsplash.com/photo-1482731215275-a1f151646268?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
   ];
 
   useEffect(() => {
@@ -105,9 +105,7 @@ function App() {
             ))}
           </div>
 
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown className="text-white w-8 h-8" />
-          </div>
+        
         </div>
       </div>
 
@@ -117,7 +115,7 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[600px] rounded-lg overflow-hidden">
               <img 
-                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80" 
+                src="https://images.unsplash.com/photo-1455849318743-b2233052fcff?ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80" 
                 alt="KMK VVS Team"
                 className="absolute inset-0 w-full h-full object-cover"
               />
