@@ -9,7 +9,7 @@ import {
   Phone,
   Mail,
   Clock,
-  ChevronDown
+  
 } from 'lucide-react';
 
 function App() {
@@ -38,12 +38,12 @@ function App() {
   }, []);
 
   const [servicesInView, setServicesInView] = useState(false);
+  const [aboutInView, setAboutInView] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const servicesObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          // Only trigger animation when scrolling into view (not on initial load)
           if (entry.isIntersecting) {
             setServicesInView(true);
           }
@@ -52,15 +52,26 @@ function App() {
       { threshold: 0.1 }
     );
 
+    const aboutObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setAboutInView(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
     const servicesSection = document.getElementById('services');
-    if (servicesSection) {
-      observer.observe(servicesSection);
-    }
+    const aboutSection = document.getElementById('about');
+    
+    if (servicesSection) servicesObserver.observe(servicesSection);
+    if (aboutSection) aboutObserver.observe(aboutSection);
 
     return () => {
-      if (servicesSection) {
-        observer.unobserve(servicesSection);
-      }
+      if (servicesSection) servicesObserver.unobserve(servicesSection);
+      if (aboutSection) aboutObserver.unobserve(aboutSection);
     };
   }, []);
 
@@ -186,12 +197,27 @@ function App() {
                 </div>
               </div>
             </div>
-            <div className="lg:pl-12">
+            <div 
+              className="lg:pl-12"
+              style={{
+                opacity: aboutInView ? 1 : 0,
+                transform: aboutInView ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'all 0.5s ease-out'
+              }}
+            >
               <h2 className="text-4xl font-bold mb-6">About KMK VVS</h2>
               <p className="text-gray-600 mb-6 text-lg">
                 Since our establishment, KMK VVS has been at the forefront of providing exceptional plumbing and installation services across the region. Our commitment to quality, reliability, and customer satisfaction has made us a trusted name in the industry.
               </p>
-              <div className="grid grid-cols-2 gap-6 mb-8">
+              <div 
+                className="grid grid-cols-2 gap-6 mb-8"
+                style={{
+                  opacity: aboutInView ? 1 : 0,
+                  transform: aboutInView ? 'translateY(0)' : 'translateY(20px)',
+                  transition: 'all 0.5s ease-out',
+                  transitionDelay: `${100}ms`
+                }}
+              >
                 <div className="border-l-4 border-blue-600 pl-4">
                   <p className="text-3xl font-bold text-blue-600">2000+</p>
                   <p className="text-gray-600">Projects Completed</p>
@@ -209,7 +235,15 @@ function App() {
                   <p className="text-gray-600">Years Experience</p>
                 </div>
               </div>
-              <p className="text-gray-600 text-lg">
+              <p 
+                className="text-gray-600 text-lg"
+                style={{
+                  opacity: aboutInView ? 1 : 0,
+                  transform: aboutInView ? 'translateY(0)' : 'translateY(20px)',
+                  transition: 'all 0.5s ease-out',
+                  transitionDelay: `${200}ms`
+                }}
+              >
                 Our team of certified professionals brings expertise, dedication, and innovative solutions to every project, ensuring that your plumbing and installation needs are met with the highest standards of workmanship.
               </p>
             </div>
