@@ -37,6 +37,33 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const [servicesInView, setServicesInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          // Only trigger animation when scrolling into view (not on initial load)
+          if (entry.isIntersecting) {
+            setServicesInView(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      observer.observe(servicesSection);
+    }
+
+    return () => {
+      if (servicesSection) {
+        observer.unobserve(servicesSection);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -64,11 +91,38 @@ function App() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent">
           <nav className="container mx-auto px-6 py-6">
             <div className="flex items-center justify-between">
-              <h1 className="text-3xl font-bold text-white">KMK VVS</h1>
+              <img src="/src/logo.png" alt="KMK VVS Logo" className="h-12 w-auto" />
               <div className="hidden md:flex space-x-8 text-white">
-                <a href="#services" className="hover:text-blue-400 transition">Services</a>
-                <a href="#about" className="hover:text-blue-400 transition">About</a>
-                <a href="#contact" className="hover:text-blue-400 transition">Contact</a>
+              <a 
+                href="#about" 
+                className="hover:text-blue-400 transition"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                About
+              </a>
+              <a 
+                href="#services" 
+                className="hover:text-blue-400 transition"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Services
+              </a>
+              <a 
+                href="#contact" 
+                className="hover:text-blue-400 transition"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Contact
+              </a>
               </div>
             </div>
           </nav>
@@ -82,10 +136,16 @@ function App() {
                 Your trusted partner for all plumbing, heating, and renovation needs
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition text-lg">
+                <button 
+                  className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition text-lg"
+                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Our Services
                 </button>
-                <button className="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition text-lg">
+                <button 
+                  className="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-black transition text-lg"
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Contact Us
                 </button>
               </div>
@@ -174,7 +234,15 @@ function App() {
               { icon: <Building2 className="w-12 h-12 text-blue-600" />, title: 'New Construction', description: 'Complete plumbing solutions for new construction projects.' },
               { icon: <PaintBucket className="w-12 h-12 text-blue-600" />, title: 'Renovation Tasks', description: 'Professional renovation services for your property.' },
             ].map((service, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition">
+              <div
+                key={index}
+                className="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-500 ease-out"
+                style={{
+                  opacity: servicesInView ? 1 : 0,
+                  transform: servicesInView ? 'translateY(0)' : 'translateY(20px)',
+                  transitionDelay: `${index * 100}ms`
+                }}
+              >
                 <div className="mb-4">{service.icon}</div>
                 <h3 className="text-xl font-bold mb-3">{service.title}</h3>
                 <p className="text-gray-600">{service.description}</p>
