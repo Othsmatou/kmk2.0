@@ -102,7 +102,7 @@ function App() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent">
           <nav className="container mx-auto px-6 py-6">
             <div className="flex items-center justify-between">
-              <img src="/src/logo.png" alt="KMK VVS Logo" className="h-12 w-auto" />
+              <img src="https://github.com/Othsmatou/kmk2.0/blob/main/src/logo.png?raw=true" alt="KMK VVS Logo" className="h-12 w-auto" />
               <div className="hidden md:flex space-x-8 text-white">
               <a 
                 href="#about" 
